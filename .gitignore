@@ -1,0 +1,45 @@
+# Node / Vite
+node_modules/
+dist/
+build/
+.vite/
+
+# Env and secrets
+.env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.log
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# OneDrive and Windows user folders
+OneDrive/
+AppData/
+Desktop/
+Documents/
+Downloads/
+Pictures/
+Videos/
+NTUSER.DAT*
+ntuser.ini
+
+# Temporary and caches
+.cache/
+*.tmp
+*.swp
+*.lock
+
+# Git artifacts
+.gitmodules
+*.orig
+
+# Replit config is intentionally tracked; do not ignore .replit

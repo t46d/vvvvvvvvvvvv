@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* خطوط عربية */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
+
+* {
+  font-family: 'Cairo', sans-serif;
+}
+
+/* تحسينات عامة */
+@layer base {
+  body {
+    @apply text-gray-900;
+  }
+  
+  input, textarea, select {
+    @apply focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+  }
+}
+
+/* مكونات مخصصة */
+@layer components {
+  .btn-primary {
+    @apply bg-primary-600 text-white px-6 py-2.5 rounded-lg font-medium 
+           hover:bg-primary-700 transition-colors duration-200 
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .btn-secondary {
+    @apply bg-white text-gray-700 px-6 py-2.5 rounded-lg font-medium 
+           border border-gray-300 hover:bg-gray-50 transition-colors duration-200;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-2.5 border border-gray-300 rounded-lg 
+           focus:ring-2 focus:ring-primary-500 focus:border-transparent
+           transition-all duration-200;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6;
+  }
+  
+  .card-hover {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6
+           hover:shadow-md transition-shadow duration-200 cursor-pointer;
+  }
+}
+
+/* رسوم متحركة */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  .animate-scale {
+    animation: scale 0.2s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scale {
+  from {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* تحسينات للدردشة */
+.chat-container {
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.chat-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* رسالة الدردشة */
+.message-bubble {
+  @apply max-w-[70%] px-4 py-2 rounded-2xl break-words;
+}
+
+.message-sent {
+  @apply bg-primary-600 text-white ml-auto;
+}
+
+.message-received {
+  @apply bg-gray-200 text-gray-900 mr-auto;
+}
+
+/* بطاقة المستخدم */
+.user-card-image {
+  @apply w-full h-80 object-cover rounded-t-xl;
+}
+
+/* شارة الإشعارات */
+.notification-badge {
+  @apply absolute -top-1 -right-1 bg-red-500 text-white text-xs 
+         rounded-full h-5 w-5 flex items-center justify-center font-bold;
+}
+
+/* حالة الاتصال */
+.online-indicator {
+  @apply absolute bottom-0 right-0 w-4 h-4 bg-green-500 
+         border-2 border-white rounded-full;
+}
+
+/* تحميل */
+.loading-spinner {
+  @apply animate-spin rounded-full border-4 border-gray-200 
+         border-t-primary-600 h-8 w-8;
+}
+
+/* تدرجات مخصصة */
+.gradient-primary {
+  background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+}
+
+.gradient-overlay {
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.7) 100%);
+}
