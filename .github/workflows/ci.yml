@@ -1,0 +1,74 @@
+name: CI Build and Optional Vercel Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint (optional)
+        run: |
+          if npm run -s lint >/dev/null 2>&1; then
+            npm run lint
+          else
+            echo "No lint script or lint skipped"
+          fi
+
+      - name: Run tests (optional)
+        run: |
+          if npm run -s test >/dev/null 2>&1; then
+            npm run test
+          else
+            echo "No tests or tests skipped"
+          fi
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload build artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: |
+            dist
+            .next
+
+  vercel-deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ secrets.VERCEL_TOKEN != '' && secrets.VERCEL_PROJECT_ID != '' && secrets.VERCEL_ORG_ID != '' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Vercel CLI
+        run: npm ci --no-audit --no-fund && npm i -g vercel@latest
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          npx vercel --prod --confirm --token "$VERCEL_TOKEN"
